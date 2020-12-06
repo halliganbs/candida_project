@@ -128,7 +128,9 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-
 # pre and post data files
 /data
 /out
+
+# local editor settings
+/.vscode

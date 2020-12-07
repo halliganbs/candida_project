@@ -10,37 +10,34 @@ from search import get_name
 from join import join
 from find import find_missing
 
-path_instrument = 'data/instrument/'
-path_meta = 'data/meta'
-
-# df.replace({col : {row_a : val_1 , row_b : val_2 }})
-# df.replace({'COMPOUND' : {index : name}})
+PATH_TO_META = 'data/meta/'
+PATH_OUT = 'out/'
+# df.loc[df.ID == 103, 'FirstName'] = "Matt"
 
 # creates list of files
-data = listdir(path_instrument)
-meta = listdir(path_meta)
+# meta = listdir(PATH_TO_META)
 
-# sanity check
-if len(data) != len(meta):
-    print("DIFFERENT NUMBER OF DATA AND META ENTRIES")
-else:
-    print("data size matches")
+# # Clean Data
+# df = pd.DataFrame()
+# print('Finding Names:')
+# for plate in meta:
+#     # create a dataframe and list rows missing compound names
+#     df, missing = find_missing(PATH_TO_META+plate)
+#     # get CATALOG id number
+#     cat_num = df.loc[missing, 'CATALOG']
+#     bar = Bar(plate, max=len(cat_num))
+#     for c in cat_num:
+#         df.loc[df.CATALOG == c, 'COMPOUND_NAME'] = get_name(c)
+#         bar.next()
+#     bar.finish()
+#     df.to_csv(PATH_OUT+plate)
 
-# create series 7000x
-series = [] 
-for n in data:
-    series.append(data[n].split('.')[0])
-
-# Clean Data
-meta_bar = Bar('Meta Cleaning', max=len(meta))
-df = pd.empty()
-for plate in meta:
-    df, missing = find_missing(path_meta+plate)
-    for n in missing:
-        name = get_name(df.loc[n, 'CATALOG'])
-        df.replace({'COMPOUND' : {n : name}})
-    df.to_csv(plate)
-    meta_bar.next()
-meta_bar.finish()
-
-# join data
+def get_meta_data(plate):
+    df, missing = find_missing(plate)
+    cat_num = df.loc[missing, 'CATALOG']
+    bar = Bar('Finding Loss data', max=len(cat_num))
+    for c in cat_num:
+        df.loc[df.CATALOG == c, 'COMPOUND_NAME'] = get_name(c)
+        bar.next()
+    bar.finish()
+    df.to_csv(PATH_OUT+plate)

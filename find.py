@@ -8,30 +8,22 @@ import numpy as np
 from progress.bar import Bar
 import requests
 
-# df = pd.read_csv('data/metadata/Stock_Plate70003.csv')
-
-# # the resulting values are offset by 2
-# temp = np.where(pd.isnull(df['COMPOUND_NAME']))
-# print(temp)
-
-# # D21
-
-# test = np.where(df['COORDINATE']=='D21')
-# print(test)
-
-# print(df.loc[78, :])
-# print()
-# print(df.loc[79, :])
-# print()
-
-# bar = Bar('Missing', max=len(temp))
-# for n in temp:
-#     print(df.loc[n, ['CATALOG', 'COORDINATE']])
-#     bar.next()
-# bar.finish()
+from search import get_name
 
 # reads in csv, finds missing, returns both
 def find_missing(csv, col='COMPOUND_NAME'):
     df = pd.read_csv(csv)
-    missing = np.where(pd.isnull(df[col]))
-    return (df, missing)
+    missing = np.where(pd.isnull(df['COMPOUND_NAME']))
+    return df, missing
+
+# df, miss = find_missing('data/meta/Stock_Plate70010.csv')
+
+# cat_num = df.loc[miss,'CATALOG']
+
+# bar = Bar("Getting Names", max=len(cat_num))
+# names = []
+# for c in cat_num:
+#     names.append(get_name(c))
+#     bar.next()
+# bar.finish()
+# print(names)

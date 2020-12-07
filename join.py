@@ -7,9 +7,9 @@ Stock_Plate7000x files: COORDINATE
 
 import pandas as pd
 
-data = pd.read_csv('data/70003.csv')
+# data = pd.read_csv('data/70003.csv')
 
-compounds = pd.read_csv('data/Stock_Plate70003.csv')
+# compounds = pd.read_csv('data/Stock_Plate70003.csv')
 
 
 # change WellID to be WellID
@@ -19,9 +19,9 @@ compounds = pd.read_csv('data/Stock_Plate70003.csv')
 
 # df = data_temp.join(compounds_temp)
 
-df = data.join(compounds.set_index('COORDINATE'), on='Image_Metadata_WellID')
+# df = data.join(compounds.set_index('COORDINATE'), on='Image_Metadata_WellID')
 
-print(df['COMPOUND_NAME'])
+# print(df['COMPOUND_NAME'])
 
 # for name in df['COMPOUND_NAME']:
 #     if name == '\\s':
@@ -32,3 +32,9 @@ print(df['COMPOUND_NAME'])
 # print(data.shape)
 
 # df.to_csv(path_or_buf='temp.csv', index=False)
+
+def join(meta, instrument, metaID='COORDINATE', instID='Image_Metadata_WellID'):
+    data = pd.read_csv(instrument)
+    compounds = pd.read_csv(meta)
+    df = data.join(compounds.set_index(metaID), on=instID)
+    return df

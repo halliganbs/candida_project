@@ -35,6 +35,11 @@ link = 'https://www.selleckchem.com/search.html?searchDTO.searchParam='
 # name2 = out2.group(1)
 # print(f'Name2: {name2}')
 
+'''
+cat_num : Catalouge number
+reg : regex for displayed html
+link : website search link
+'''
 def get_name(cat_num, reg=rg, link=link):
     request = requests.get(link+cat_num)
     page = request.text

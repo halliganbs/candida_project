@@ -33,11 +33,13 @@ PATH_OUT = 'out/'
 #     df.to_csv(PATH_OUT+plate)
 
 def get_meta_data(plate):
-    df, missing = find_missing(plate)
+    df, missing = find_missing(PATH_TO_META+plate)
     cat_num = df.loc[missing, 'CATALOG']
     bar = Bar('Finding Loss data', max=len(cat_num))
     for c in cat_num:
         df.loc[df.CATALOG == c, 'COMPOUND_NAME'] = get_name(c)
         bar.next()
     bar.finish()
-    df.to_csv(PATH_OUT+plate)
+    df.to_csv(PATH_OUT+plate, index=False)
+
+get_meta_data('Stock_Plate70012.csv')

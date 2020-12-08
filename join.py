@@ -34,7 +34,16 @@ import pandas as pd
 # df.to_csv(path_or_buf='temp.csv', index=False)
 
 def join(meta, instrument, metaID='COORDINATE', instID='Image_Metadata_WellID'):
-    data = pd.read_csv(instrument)
+    data = pd.read_csv(instrument, sep='\t')
     compounds = pd.read_csv(meta)
     df = data.join(compounds.set_index(metaID), on=instID)
     return df
+
+# DATA_PATH = 'data/instrument/'
+# META_PATH = 'out/'
+# JOIN_PATH = 'joined/'
+
+# PLATE = '70012.csv'
+
+# joined = join(meta=META_PATH+'Stock_Plate'+PLATE, instrument=DATA_PATH+PLATE)
+# joined.to_csv(JOIN_PATH+PLATE, index=False)

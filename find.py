@@ -13,6 +13,7 @@ from search import get_name
 # reads in csv, finds missing, returns both
 def find_missing(csv, col='COMPOUND_NAME'):
     df = pd.read_csv(csv)
+    # df['COMPOUND_NAME'] = None
     missing = np.where(pd.isnull(df['COMPOUND_NAME']))
     return df, missing
 
